@@ -15,7 +15,7 @@ allprojects {
     }
     ext {
         appName = 'libgdx-hundun-lib'
-        gdxVersion = '1.9.12'
+        gdxVersion = '1.10.0'
         screenmanagerVersion = '0.6.8'
         vfxVersion = '0.5.0'
     }
