@@ -5,7 +5,8 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 
-import hundun.gdxgame.corelib.base.AbstractSaveHandler;
+import hundun.gdxgame.corelib.base.save.AbstractSaveHandler;
+import hundun.gdxgame.corelib.base.save.ISaveTool;
 
 /**
  * 
@@ -18,7 +19,11 @@ public class StarterSaveHandler<T_ROOT_SAVE, T_SYSTEM_SAVE, T_GAMEPLAY_SAVE> ext
     private final List<ISubSystemSettingSaveHandler<T_SYSTEM_SAVE>> subSystemSettingSaveHandlers = new ArrayList<>();
     private final IFactory<T_ROOT_SAVE, T_SYSTEM_SAVE, T_GAMEPLAY_SAVE> factory;
     
-    public StarterSaveHandler(IFactory<T_ROOT_SAVE, T_SYSTEM_SAVE, T_GAMEPLAY_SAVE> factory) {
+    public StarterSaveHandler(
+            IFactory<T_ROOT_SAVE, T_SYSTEM_SAVE, T_GAMEPLAY_SAVE> factory, 
+            ISaveTool<T_ROOT_SAVE> saveTool
+            ) {
+        super(saveTool);
         this.factory = factory;
     }
     

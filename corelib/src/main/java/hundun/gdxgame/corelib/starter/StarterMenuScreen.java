@@ -79,23 +79,6 @@ extends BaseHundunScreen<T_GAME, T_SAVE> {
         super(game);
     }
 
-    
-//    public StarterMenuScreen(T_GAME game, 
-//            Actor title,
-//            Image backImage,
-//            Actor buttonContinueGame,
-//            Actor buttonNewGame,
-//            Actor buttonIntoSettingScreen
-//            ) {
-//        super(game);
-//        this.backImage = backImage;
-//        this.buttonContinueGame = buttonContinueGame;
-//        this.buttonNewGame = buttonNewGame;
-//        this.buttonIntoSettingScreen = buttonIntoSettingScreen;
-//        
-//
-//    }
-
     private void initScene2d() {
 
         backUiStage.addActor(backImage);
@@ -107,7 +90,7 @@ extends BaseHundunScreen<T_GAME, T_SAVE> {
                 .row();
         
 
-        if (game.gameHasSave()) {
+        if (game.getSaveHandler().gameHasSave()) {
             uiRootTable.add(buttonContinueGame)
                 .height(BUTTON_BIG_HEIGHT)
                 .fillY()
@@ -116,7 +99,7 @@ extends BaseHundunScreen<T_GAME, T_SAVE> {
         }
 
         uiRootTable.add(buttonNewGame)
-            .height(game.gameHasSave() ? BUTTON_SMALL_HEIGHT : BUTTON_BIG_HEIGHT)
+            .height(game.getSaveHandler().gameHasSave() ? BUTTON_SMALL_HEIGHT : BUTTON_BIG_HEIGHT)
             .fillY()
             .padTop(10)
             .row();

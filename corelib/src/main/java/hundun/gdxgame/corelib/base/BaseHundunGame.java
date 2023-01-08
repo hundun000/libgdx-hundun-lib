@@ -7,8 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import de.eskalon.commons.core.ManagedGame;
 import de.eskalon.commons.screen.ManagedScreen;
 import de.eskalon.commons.screen.transition.ScreenTransition;
+import hundun.gdxgame.corelib.base.save.AbstractSaveHandler;
+import hundun.gdxgame.corelib.base.save.ISaveTool;
 import hundun.gdxgame.corelib.base.util.JavaFeatureForGwt;
-import hundun.gdxgame.corelib.base.util.save.ISaveTool;
 import lombok.Getter;
 
 
@@ -28,23 +29,16 @@ public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, 
     @Getter
     private Skin mainSkin;
 
-    private ISaveTool<T_SAVE> saveTool;
-
 
     // ------ init in createStage1(), or keep null ------
-    @Getter
-    protected BaseViewModelContext modelContext;
     @Getter
     protected AbstractSaveHandler<T_SAVE> saveHandler;
     protected String mainSkinFilePath;
     
     
-    public BaseHundunGame(int viewportWidth, int viewportHeight, 
-            ISaveTool<T_SAVE> saveTool
-            ) {
+    public BaseHundunGame(int viewportWidth, int viewportHeight) {
         this.constMainViewportWidth = viewportWidth;
         this.constMainViewportHeight = viewportHeight;
-        this.saveTool = saveTool;
     }
     
     protected abstract void createStage1();
@@ -63,46 +57,12 @@ public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, 
             this.mainSkin = new Skin(Gdx.files.internal(DEFAULT_MAIN_SKIN_FILE_PATH));
         }
         
-        this.saveTool.lazyInitOnGameCreate();
-        this.modelContext.lazyInitOnGameCreate();
+        this.saveHandler.lazyInitOnGameCreate();
         
         createStage3();
 	}
 	
-	// ====== save & load ======
-	public void systemSettingLoadOrNew() {
-
-	    T_SAVE saveData;
-        if (saveTool.hasSave()) {
-            saveData = saveTool.readRootSaveData();
-        } else {
-            saveData = saveHandler.genereateNewGameSaveData();
-        }
-
-        saveHandler.applySystemSetting(saveData);
-        Gdx.app.log(this.getClass().getSimpleName(), "systemSettingLoad call");
-    }
 	
-	
-	public void gameLoadOrNew(boolean load) {
-
-	    T_SAVE saveData;
-	    if (load && saveTool.hasSave()) {
-	        saveData = saveTool.readRootSaveData();
-	    } else {
-	        saveData = saveHandler.genereateNewGameSaveData();
-	    }
-
-	    saveHandler.applyGameSaveData(saveData);
-	    Gdx.app.log(this.getClass().getSimpleName(), load ? "load game done" : "new game done");
-	}
-    public void gameSaveCurrent() {
-        Gdx.app.log(this.getClass().getSimpleName(), "saveCurrent called");
-        saveTool.writeRootSaveData(saveHandler.currentSituationToSaveData());
-    }
-    public boolean gameHasSave() {
-        return saveTool.hasSave();
-    }
     // ====== ====== ======
 
 
@@ -110,7 +70,6 @@ public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, 
 	@Override
 	public void dispose () {
 		batch.dispose();
-		modelContext.disposeAll();
 	}
 	
 	

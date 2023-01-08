@@ -1,4 +1,4 @@
-package hundun.gdxgame.corelib.base.util.save;
+package hundun.gdxgame.corelib.base.save;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
