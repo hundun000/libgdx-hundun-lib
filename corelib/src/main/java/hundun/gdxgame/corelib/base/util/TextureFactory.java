@@ -21,7 +21,7 @@ public class TextureFactory {
     
     public static Texture createAlphaBoard(int width, int height, Color color, float alpha) {
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA4444);
-        pixmap.setColor(color.r, color.r, color.r, alpha);
+        pixmap.setColor(color.r, color.g, color.b, alpha);
         pixmap.fill();
         Texture texture = new Texture(pixmap);
         return texture;
