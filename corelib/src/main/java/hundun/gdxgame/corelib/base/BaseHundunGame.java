@@ -8,7 +8,6 @@ import de.eskalon.commons.core.ManagedGame;
 import de.eskalon.commons.screen.ManagedScreen;
 import de.eskalon.commons.screen.transition.ScreenTransition;
 import hundun.gdxgame.corelib.base.save.AbstractSaveHandler;
-import hundun.gdxgame.corelib.base.save.ISaveTool;
 import hundun.gdxgame.corelib.base.util.JavaFeatureForGwt;
 import lombok.Getter;
 
@@ -42,6 +41,7 @@ public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, 
     }
     
     protected abstract void createStage1();
+    protected abstract void createStage2();
     protected abstract void createStage3();
     
 	@Override
@@ -59,6 +59,7 @@ public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, 
         
         this.saveHandler.lazyInitOnGameCreate();
         
+        createStage2();
         createStage3();
 	}
 	

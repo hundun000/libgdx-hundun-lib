@@ -1,8 +1,6 @@
 package hundun.gdxgame.corelib.base.util;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -13,20 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
  */
 public class DrawableFactory {
     public static Drawable createBorderBoard(int width, int height, float grayColor, int borderWidth) {
-        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGB565);
-        pixmap.setColor(grayColor + 0.1f, grayColor + 0.1f, grayColor + 0.1f, 1.0f);
-        pixmap.fill();
-        pixmap.setColor(grayColor, grayColor, grayColor, 1.0f);
-        pixmap.fillRectangle(borderWidth, borderWidth, width - borderWidth * 2, height - borderWidth * 2);
-        Drawable drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
+        Drawable drawable = new TextureRegionDrawable(new TextureRegion(TextureFactory.createBorderBoard(width, height, grayColor, borderWidth)));
         return drawable;
     }
     
     public static Drawable createAlphaBoard(int width, int height, Color color, float alpha) {
-        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA4444);
-        pixmap.setColor(color.r, color.r, color.r, alpha);
-        pixmap.fill();
-        Drawable drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
+        Drawable drawable = new TextureRegionDrawable(new TextureRegion(TextureFactory.createAlphaBoard(width, height, color, alpha)));
         return drawable;
     }
 
