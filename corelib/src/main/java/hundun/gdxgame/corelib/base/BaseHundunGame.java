@@ -14,16 +14,16 @@ import lombok.Getter;
 
 public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, ScreenTransition> {
     public boolean debugMode;
-    private final int constMainViewportWidth;
-    private final int constMainViewportHeight;
+    protected final int constMainViewportWidth;
+    protected final int constMainViewportHeight;
 
     @Getter
-    private SpriteBatch batch;
+    protected SpriteBatch batch;
 
     
     
     @Getter
-    private Skin mainSkin;
+    protected Skin mainSkin;
 
 
     // ------ init in createStage1(), or keep null ------
