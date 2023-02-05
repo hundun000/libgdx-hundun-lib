@@ -16,9 +16,6 @@ public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, 
     public boolean debugMode;
     private final int constMainViewportWidth;
     private final int constMainViewportHeight;
-    
-    private static final String DEFAULT_MAIN_SKIN_FILE_PATH = "skins/default/skin/uiskin.json";
-    
 
     @Getter
     private SpriteBatch batch;
@@ -40,7 +37,13 @@ public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, 
         this.constMainViewportHeight = viewportHeight;
     }
     
-    protected abstract void createStage1();
+    protected void createStage1() {
+        this.batch = new SpriteBatch();
+        if (mainSkinFilePath != null) {
+            this.mainSkin = new Skin(Gdx.files.internal(mainSkinFilePath));
+        }
+        this.saveHandler.lazyInitOnGameCreate();
+    };
     protected abstract void createStage2();
     protected abstract void createStage3();
     
@@ -49,16 +52,6 @@ public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, 
 	    super.create();
 	    
 	    createStage1();
-	    
-	    this.batch = new SpriteBatch();
-        if (mainSkinFilePath != null) {
-            this.mainSkin = new Skin(Gdx.files.internal(mainSkinFilePath));
-        } else {
-            this.mainSkin = new Skin(Gdx.files.internal(DEFAULT_MAIN_SKIN_FILE_PATH));
-        }
-        
-        this.saveHandler.lazyInitOnGameCreate();
-        
         createStage2();
         createStage3();
 	}
