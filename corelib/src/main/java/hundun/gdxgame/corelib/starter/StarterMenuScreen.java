@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hundun.gdxgame.corelib.base.BaseHundunGame;
 import hundun.gdxgame.corelib.base.BaseHundunScreen;
@@ -63,20 +64,21 @@ extends BaseHundunScreen<T_GAME, T_SAVE> {
         
         public static <T_GAME extends BaseHundunGame<T_SAVE>, T_SAVE> StarterMenuScreen<T_GAME, T_SAVE> simpleBuild(
                 T_GAME game, 
+                Viewport sharedViewport,
                 String titleText,
                 AtlasRegion backTexture,
                 InputListener buttonContinueGameInputListener, 
                 InputListener buttonNewGameInputListener
                 ) {
-            StarterMenuScreen<T_GAME, T_SAVE> target = new StarterMenuScreen<>(game);
+            StarterMenuScreen<T_GAME, T_SAVE> target = new StarterMenuScreen<>(game, sharedViewport);
             simpleFill(target, game, titleText, backTexture, buttonContinueGameInputListener, buttonNewGameInputListener);
             return target;
         }
     }
     
-    public StarterMenuScreen(T_GAME game
+    public StarterMenuScreen(T_GAME game, Viewport sharedViewport
             ) {
-        super(game);
+        super(game, sharedViewport);
     }
 
     private void initScene2d() {

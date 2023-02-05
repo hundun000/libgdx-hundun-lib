@@ -36,10 +36,11 @@ public abstract class BaseHundunScreen<T_GAME extends BaseHundunGame<T_SAVE>, T_
 
     protected LogicFrameHelper logicFrameHelper;
     
-    public BaseHundunScreen(T_GAME game) {
+    public BaseHundunScreen(T_GAME game, Viewport sharedViewport) {
         this.game = game;
-        OrthographicCamera camera = new OrthographicCamera();
-        this.sharedViewport = new FitViewport(game.getWidth(), game.getHeight(), camera);
+        //OrthographicCamera camera = new OrthographicCamera();
+        //this.sharedViewport = new FitViewport(game.getWidth(), game.getHeight(), camera);
+        this.sharedViewport = sharedViewport;
         this.uiStage = new Stage(sharedViewport, game.getBatch());
         this.popupUiStage = new Stage(sharedViewport, game.getBatch());
         this.backUiStage = new Stage(sharedViewport, game.getBatch());
