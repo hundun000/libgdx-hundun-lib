@@ -14,7 +14,7 @@ public abstract class AbstractSaveHandler<T_SAVE> {
     protected abstract void applySystemSetting(T_SAVE saveData);
     protected abstract void applyGameSaveData(T_SAVE saveData);
     protected abstract T_SAVE currentSituationToSaveData();
-    protected abstract T_SAVE genereateNewGameSaveData();
+    protected abstract T_SAVE genereateStarterRootSaveData();
     public abstract void registerSubHandler(Object object);
     
     
@@ -32,7 +32,7 @@ public abstract class AbstractSaveHandler<T_SAVE> {
         if (saveTool.hasSave()) {
             saveData = saveTool.readRootSaveData();
         } else {
-            saveData = this.genereateNewGameSaveData();
+            saveData = this.genereateStarterRootSaveData();
         }
 
         this.applySystemSetting(saveData);
@@ -45,7 +45,7 @@ public abstract class AbstractSaveHandler<T_SAVE> {
         if (load && saveTool.hasSave()) {
             saveData = saveTool.readRootSaveData();
         } else {
-            saveData = this.genereateNewGameSaveData();
+            saveData = this.genereateStarterRootSaveData();
         }
 
         this.applyGameSaveData(saveData);

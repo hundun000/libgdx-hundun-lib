@@ -11,7 +11,7 @@ import hundun.gdxgame.corelib.base.save.ISaveTool;
 /**
  * 
  */
-public class StarterSaveHandler<T_ROOT_SAVE, T_SYSTEM_SAVE, T_GAMEPLAY_SAVE> extends AbstractSaveHandler<T_ROOT_SAVE> {
+public abstract class StarterSaveHandler<T_ROOT_SAVE, T_SYSTEM_SAVE, T_GAMEPLAY_SAVE> extends AbstractSaveHandler<T_ROOT_SAVE> {
 
     private boolean gameSaveInited = false;
     private boolean systemSettingInited = false;
@@ -56,12 +56,6 @@ public class StarterSaveHandler<T_ROOT_SAVE, T_SYSTEM_SAVE, T_GAMEPLAY_SAVE> ext
                 gameplaySave,
                 systemSettingSave 
                 );
-    }
-    
-    @Override
-    protected T_ROOT_SAVE genereateNewGameSaveData() {
-        T_ROOT_SAVE rootSaveData = factory.newRootSave(null, null);
-        return rootSaveData;
     }
 
     @Override
