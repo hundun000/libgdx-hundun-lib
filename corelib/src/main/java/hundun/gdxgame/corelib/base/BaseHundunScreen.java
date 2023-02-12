@@ -1,11 +1,9 @@
 package hundun.gdxgame.corelib.base;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.crashinvaders.vfx.VfxManager;
 
@@ -29,11 +27,10 @@ public abstract class BaseHundunScreen<T_GAME extends BaseHundunGame<T_SAVE>, T_
     protected final Stage popupUiStage;
     protected final Stage backUiStage;
     protected final VfxManager vfxManager;
-
-    // ------ lazy init ------
     protected final Table uiRootTable;
     protected final Table popupRootTable;
-
+    
+    // ------ lazy init ------
     protected LogicFrameHelper logicFrameHelper;
     
     public BaseHundunScreen(T_GAME game, Viewport sharedViewport) {
@@ -85,17 +82,27 @@ public abstract class BaseHundunScreen<T_GAME extends BaseHundunGame<T_SAVE>, T_
         vfxManager.cleanUpBuffers();
         vfxManager.beginInputCapture();
         
+        // ------ only backUi and UI use vfx ------
+        backUiStage.getViewport().apply();
         backUiStage.draw();
+        uiStage.getViewport().apply();
         uiStage.draw();
+        gameObjectDraw(delta);
         
         vfxManager.endInputCapture();
         vfxManager.applyEffects();
         vfxManager.renderToScreen();
         
+        // ------ popupUi out of vfx ------
+        popupUiStage.getViewport().apply();
         popupUiStage.draw();
         renderPopupAnimations(delta, game.getBatch());
     }
     
+    protected void gameObjectDraw(float delta) {
+        // base-class do nothing
+    }
+
     protected void renderPopupAnimations(float delta, SpriteBatch spriteBatch) {
         // base-class do nothing
     }
