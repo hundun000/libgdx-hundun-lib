@@ -25,7 +25,8 @@ public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, 
     @Getter
     protected Skin mainSkin;
 
-
+    @Getter
+    protected final LibgdxFrontend frontend;
     // ------ init in createStage1(), or keep null ------
     @Getter
     protected AbstractSaveHandler<T_SAVE> saveHandler;
@@ -35,8 +36,12 @@ public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, 
     public BaseHundunGame(int viewportWidth, int viewportHeight) {
         this.constMainViewportWidth = viewportWidth;
         this.constMainViewportHeight = viewportHeight;
+        this.frontend = new LibgdxFrontend();
     }
     
+    /**
+     * 只依赖Gdx static的成员
+     */
     protected void createStage1() {
         this.batch = new SpriteBatch();
         if (mainSkinFilePath != null) {
@@ -44,7 +49,13 @@ public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, 
         }
         this.saveHandler.lazyInitOnGameCreate();
     };
+    /**
+     * 只依赖Stage1的成员
+     */
     protected abstract void createStage2();
+    /**
+     * 自由依赖
+     */
     protected abstract void createStage3();
     
 	@Override
@@ -65,12 +76,6 @@ public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, 
 	public void dispose () {
 		batch.dispose();
 	}
-	
-	
-	@SuppressWarnings("unchecked")
-    protected <T extends BaseHundunScreen<?, ?>> T getScreen(Class<T> clazz) {
-        return (T) JavaFeatureForGwt.requireNonNull(getScreenManager().getScreen(clazz.getSimpleName()));
-    }
 
 
     @Override
