@@ -6,7 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 
 import hundun.gdxgame.corelib.base.save.AbstractSaveHandler;
-import hundun.gdxgame.corelib.base.save.ISaveTool;
+import hundun.gdxgame.gamelib.base.save.ISaveTool;
 
 /**
  * 

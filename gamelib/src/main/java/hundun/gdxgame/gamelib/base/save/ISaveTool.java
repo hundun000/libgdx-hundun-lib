@@ -1,4 +1,4 @@
-package hundun.gdxgame.corelib.base.save;
+package hundun.gdxgame.gamelib.base.save;
 
 /**
  * @author hundun

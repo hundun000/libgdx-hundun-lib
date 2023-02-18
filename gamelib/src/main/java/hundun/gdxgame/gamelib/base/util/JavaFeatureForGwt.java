@@ -1,4 +1,4 @@
-package hundun.gdxgame.corelib.base.util;
+package hundun.gdxgame.gamelib.base.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,10 +80,16 @@ public class JavaFeatureForGwt {
     }
     
     public static String stringFormat(String format, Object... args) {
+        
+        // try type %s
         String delimiter = "%s";
-
         for (int i = 0; i < args.length; i++) {
             format = format.replaceFirst(delimiter, args[i] != null ? args[i].toString() : "null");
+        }
+        
+        // try type {i}
+        for (int i = 0; i < args.length; i++) {
+            format = format.replace("{" + i + "}", args[i] != null ? args[i].toString() : "null");
         }
 
         return format;

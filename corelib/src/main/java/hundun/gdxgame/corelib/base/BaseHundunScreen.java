@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.crashinvaders.vfx.VfxManager;
 
 import de.eskalon.commons.screen.ManagedScreen;
+import hundun.gdxgame.gamelib.base.LogicFrameHelper;
 import lombok.Getter;
 
 

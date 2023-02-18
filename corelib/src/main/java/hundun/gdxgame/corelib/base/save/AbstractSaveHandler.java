@@ -2,6 +2,8 @@ package hundun.gdxgame.corelib.base.save;
 
 import com.badlogic.gdx.Gdx;
 
+import hundun.gdxgame.gamelib.base.save.ISaveTool;
+
 /**
  * @author hundun
  * Created on 2022/09/09

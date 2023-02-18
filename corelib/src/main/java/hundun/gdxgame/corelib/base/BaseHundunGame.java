@@ -8,7 +8,7 @@ import de.eskalon.commons.core.ManagedGame;
 import de.eskalon.commons.screen.ManagedScreen;
 import de.eskalon.commons.screen.transition.ScreenTransition;
 import hundun.gdxgame.corelib.base.save.AbstractSaveHandler;
-import hundun.gdxgame.corelib.base.util.JavaFeatureForGwt;
+import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import lombok.Getter;
 
 

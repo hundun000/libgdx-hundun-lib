@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hundun.gdxgame.corelib.base.BaseHundunGame;
 import hundun.gdxgame.corelib.base.BaseHundunScreen;
-import hundun.gdxgame.corelib.base.util.JavaFeatureForGwt;
+import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 
 
 

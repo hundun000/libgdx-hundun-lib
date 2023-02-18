@@ -9,9 +9,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hundun.gdxgame.corelib.base.BaseHundunGame;
 import hundun.gdxgame.corelib.base.BaseHundunScreen;
-import hundun.gdxgame.corelib.base.LogicFrameHelper;
-import hundun.gdxgame.corelib.starter.listerner.IGameAreaChangeListener;
-import hundun.gdxgame.corelib.starter.listerner.ILogicFrameListener;
+import hundun.gdxgame.gamelib.base.LogicFrameHelper;
+import hundun.gdxgame.gamelib.starter.listerner.IGameAreaChangeListener;
+import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import lombok.Getter;
 
 

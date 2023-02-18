@@ -1,4 +1,4 @@
-package hundun.gdxgame.corelib.base;
+package hundun.gdxgame.gamelib.base;
 
 import lombok.Getter;
 import lombok.Setter;
