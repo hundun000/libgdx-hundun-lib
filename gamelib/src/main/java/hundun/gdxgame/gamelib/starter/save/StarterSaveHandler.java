@@ -1,11 +1,10 @@
-package hundun.gdxgame.corelib.starter;
+package hundun.gdxgame.gamelib.starter.save;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
-
-import hundun.gdxgame.corelib.base.save.AbstractSaveHandler;
+import hundun.gdxgame.gamelib.base.IFrontEnd;
+import hundun.gdxgame.gamelib.base.save.AbstractSaveHandler;
 import hundun.gdxgame.gamelib.base.save.ISaveTool;
 
 /**
@@ -20,10 +19,11 @@ public abstract class StarterSaveHandler<T_ROOT_SAVE, T_SYSTEM_SAVE, T_GAMEPLAY_
     private final IFactory<T_ROOT_SAVE, T_SYSTEM_SAVE, T_GAMEPLAY_SAVE> factory;
     
     public StarterSaveHandler(
+            IFrontEnd frontEnd,
             IFactory<T_ROOT_SAVE, T_SYSTEM_SAVE, T_GAMEPLAY_SAVE> factory, 
             ISaveTool<T_ROOT_SAVE> saveTool
             ) {
-        super(saveTool);
+        super(frontEnd, saveTool);
         this.factory = factory;
     }
     
@@ -94,11 +94,11 @@ public abstract class StarterSaveHandler<T_ROOT_SAVE, T_SYSTEM_SAVE, T_GAMEPLAY_
     public void registerSubHandler(Object object) {
         if (object instanceof ISubGameplaySaveHandler) {
             subGameplaySaveHandlers.add((ISubGameplaySaveHandler<T_GAMEPLAY_SAVE>)object);
-            Gdx.app.log(this.getClass().getSimpleName(), object.getClass().getSimpleName() + " register as " + ISubGameplaySaveHandler.class.getSimpleName());
+            frontEnd.log(this.getClass().getSimpleName(), object.getClass().getSimpleName() + " register as " + ISubGameplaySaveHandler.class.getSimpleName());
         }
         if (object instanceof ISubSystemSettingSaveHandler) {
             subSystemSettingSaveHandlers.add((ISubSystemSettingSaveHandler<T_SYSTEM_SAVE>)object);
-            Gdx.app.log(this.getClass().getSimpleName(), object.getClass().getSimpleName() + " register as " + ISubSystemSettingSaveHandler.class.getSimpleName());
+            frontEnd.log(this.getClass().getSimpleName(), object.getClass().getSimpleName() + " register as " + ISubSystemSettingSaveHandler.class.getSimpleName());
         }
     }
 }

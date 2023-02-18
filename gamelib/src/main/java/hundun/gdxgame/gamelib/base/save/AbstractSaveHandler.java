@@ -1,8 +1,6 @@
-package hundun.gdxgame.corelib.base.save;
+package hundun.gdxgame.gamelib.base.save;
 
-import com.badlogic.gdx.Gdx;
-
-import hundun.gdxgame.gamelib.base.save.ISaveTool;
+import hundun.gdxgame.gamelib.base.IFrontEnd;
 
 /**
  * @author hundun
@@ -11,7 +9,7 @@ import hundun.gdxgame.gamelib.base.save.ISaveTool;
 public abstract class AbstractSaveHandler<T_SAVE> {
     
     private ISaveTool<T_SAVE> saveTool;
-    
+    protected IFrontEnd frontEnd;
     
     protected abstract void applySystemSetting(T_SAVE saveData);
     protected abstract void applyGameSaveData(T_SAVE saveData);
@@ -20,8 +18,9 @@ public abstract class AbstractSaveHandler<T_SAVE> {
     public abstract void registerSubHandler(Object object);
     
     
-    public AbstractSaveHandler(ISaveTool<T_SAVE> saveTool) {
+    public AbstractSaveHandler(IFrontEnd frontEnd, ISaveTool<T_SAVE> saveTool) {
         this.saveTool = saveTool;
+        this.frontEnd = frontEnd;
     }
     
     public void lazyInitOnGameCreate() {
@@ -38,7 +37,7 @@ public abstract class AbstractSaveHandler<T_SAVE> {
         }
 
         this.applySystemSetting(saveData);
-        Gdx.app.log(this.getClass().getSimpleName(), "systemSettingLoad call");
+        frontEnd.log(this.getClass().getSimpleName(), "systemSettingLoad call");
     }
     
     public void gameLoadOrNew(boolean load) {
@@ -51,11 +50,11 @@ public abstract class AbstractSaveHandler<T_SAVE> {
         }
 
         this.applyGameSaveData(saveData);
-        Gdx.app.log(this.getClass().getSimpleName(), load ? "load game done" : "new game done");
+        frontEnd.log(this.getClass().getSimpleName(), load ? "load game done" : "new game done");
     }
     
     public void gameSaveCurrent() {
-        Gdx.app.log(this.getClass().getSimpleName(), "saveCurrent called");
+        frontEnd.log(this.getClass().getSimpleName(), "saveCurrent called");
         saveTool.writeRootSaveData(this.currentSituationToSaveData());
     }
     
