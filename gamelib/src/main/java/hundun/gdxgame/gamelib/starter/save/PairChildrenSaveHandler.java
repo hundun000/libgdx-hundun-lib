@@ -14,11 +14,13 @@ public abstract class PairChildrenSaveHandler<T_ROOT_SAVE, T_SYSTEM_SAVE, T_GAME
         extends AbstractSaveHandler<T_ROOT_SAVE> {
 
     private boolean gameSaveDirty = false;
-    T_ROOT_SAVE rootSaveDataCache;
+    T_ROOT_SAVE starterRootSaveDataCache;
+    T_ROOT_SAVE fileRootSaveDataCache;
     boolean hasContinuedGameplaySave;
     private final List<ISubGameplaySaveHandler<T_GAMEPLAY_SAVE>> subGameplaySaveHandlers = new ArrayList<>();
     private final List<ISubSystemSettingSaveHandler<T_SYSTEM_SAVE>> subSystemSettingSaveHandlers = new ArrayList<>();
     private final IRootSaveExtension<T_ROOT_SAVE, T_SYSTEM_SAVE, T_GAMEPLAY_SAVE> rootSaveExtension;
+    
     
     public PairChildrenSaveHandler(
             IFrontend frontend,
@@ -27,49 +29,59 @@ public abstract class PairChildrenSaveHandler<T_ROOT_SAVE, T_SYSTEM_SAVE, T_GAME
             ) {
         super(frontend, saveTool);
         this.rootSaveExtension = factory;
+        
     }
     
-    private void rootSaveCacheLoadOrStarter() {
-        T_ROOT_SAVE rootSaveData;
+    @Override
+    public void lazyInitOnGameCreate() {
+        super.lazyInitOnGameCreate();
         if (saveTool.hasRootSave()) {
-            rootSaveData = saveTool.readRootSaveData();
+            fileRootSaveDataCache = saveTool.readRootSaveData();
         } else {
-            rootSaveData = this.genereateStarterRootSaveData();
+            fileRootSaveDataCache = null;
         }
-        this.hasContinuedGameplaySave = saveTool.hasRootSave() && rootSaveExtension.getGameplaySave(rootSaveData) != null;
-        this.rootSaveDataCache = rootSaveData;
+        this.starterRootSaveDataCache = this.genereateStarterRootSaveData();
+        this.hasContinuedGameplaySave = fileRootSaveDataCache != null && rootSaveExtension.getGameplaySave(fileRootSaveDataCache) != null;
     }
     
     @Override
     public void systemSettingLoadOrStarter() {
-        rootSaveCacheLoadOrStarter();
-        T_SYSTEM_SAVE systemSave = rootSaveExtension.getSystemSave(rootSaveDataCache);
+        
+        T_SYSTEM_SAVE systemSave;
+        if (saveTool.hasRootSave()) {
+            systemSave = rootSaveExtension.getSystemSave(fileRootSaveDataCache);
+        } else {
+            systemSave = rootSaveExtension.getSystemSave(starterRootSaveDataCache);
+        }
+        
         if (systemSave != null) {
             subSystemSettingSaveHandlers.forEach(it -> it.applySystemSetting(systemSave));
         }
         frontend.log(this.getClass().getSimpleName(), "systemSettingLoadOrStarter call");
     }
     
-    /**
-     * must after systemSettingLoadOrStarter(), and rootSaveDataCache from LoadOrStarter will be not null.
-     */
+
     @Override
     public boolean hasContinuedGameplaySave() {
         return hasContinuedGameplaySave;
     }
-    /**
-     * must after systemSettingLoadOrStarter(), and rootSaveDataCache from LoadOrStarter will be not null.
-     */
+
     @Override
-    public void gameplayLoadOrStarter(boolean load) {
-        if (!load) {
-            gameSaveDirty = true;
+    public void gameplayLoadOrStarter(boolean continued) {
+        gameSaveDirty = true;
+        
+        T_GAMEPLAY_SAVE gameplaySave;
+        if (continued) {
+            gameplaySave = rootSaveExtension.getGameplaySave(fileRootSaveDataCache);
+        } else {
+            gameplaySave = rootSaveExtension.getGameplaySave(starterRootSaveDataCache);
         }
-        T_GAMEPLAY_SAVE gameplaySave = rootSaveExtension.getGameplaySave(rootSaveDataCache);
+        
+        
         if (gameplaySave != null) {
             subGameplaySaveHandlers.forEach(it -> it.applyGameplaySaveData(gameplaySave));
         }
-        frontend.log(this.getClass().getSimpleName(), load ? "load game done" : "starter game done");
+        frontend.log(this.getClass().getSimpleName(), continued ? "continued game done" : "starter game done");
     }
     
 
@@ -83,7 +95,7 @@ public abstract class PairChildrenSaveHandler<T_ROOT_SAVE, T_SYSTEM_SAVE, T_GAME
             subGameplaySaveHandlers.forEach(it -> it.currentSituationToGameplaySaveData(gameplaySave));
         } else {
             if (hasContinuedGameplaySave) {
-                gameplaySave = rootSaveExtension.getGameplaySave(rootSaveDataCache);
+                gameplaySave = rootSaveExtension.getGameplaySave(fileRootSaveDataCache);
             } else {
                 gameplaySave = null;
             }
