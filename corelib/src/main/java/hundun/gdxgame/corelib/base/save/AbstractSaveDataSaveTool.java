@@ -21,7 +21,7 @@ public abstract class AbstractSaveDataSaveTool<T> implements ISaveTool<T> {
     }
     
     @Override
-    public boolean hasSave() {
+    public boolean hasRootSave() {
         return preferences != null && preferences.contains(ROOT_KEY);
     }
     

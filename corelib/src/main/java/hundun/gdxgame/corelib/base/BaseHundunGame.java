@@ -87,4 +87,5 @@ public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, 
     public int getHeight() {
         return constMainViewportHeight;
     }
+
 }

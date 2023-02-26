@@ -8,13 +8,15 @@ import hundun.gdxgame.gamelib.base.IFrontend;
  */
 public abstract class AbstractSaveHandler<T_SAVE> {
     
-    private ISaveTool<T_SAVE> saveTool;
+    protected ISaveTool<T_SAVE> saveTool;
     protected IFrontend frontend;
     
-    protected abstract void applySystemSetting(T_SAVE saveData);
-    protected abstract void applyGameSaveData(T_SAVE saveData);
-    protected abstract T_SAVE currentSituationToSaveData();
+    public abstract void systemSettingLoadOrStarter();
+    public abstract void gameplayLoadOrStarter(boolean load);
+    //protected abstract void applyRootSaveData(T_SAVE saveData);
+    protected abstract T_SAVE currentSituationToRootSaveData();
     protected abstract T_SAVE genereateStarterRootSaveData();
+    public abstract boolean hasContinuedGameplaySave();
     public abstract void registerSubHandler(Object object);
     
     
@@ -27,39 +29,9 @@ public abstract class AbstractSaveHandler<T_SAVE> {
         this.saveTool.lazyInitOnGameCreate();
     }
     
-    public void systemSettingLoadOrNew() {
-
-        T_SAVE saveData;
-        if (saveTool.hasSave()) {
-            saveData = saveTool.readRootSaveData();
-        } else {
-            saveData = this.genereateStarterRootSaveData();
-        }
-
-        this.applySystemSetting(saveData);
-        frontend.log(this.getClass().getSimpleName(), "systemSettingLoad call");
-    }
-    
-    public void gameLoadOrNew(boolean load) {
-
-        T_SAVE saveData;
-        if (load && saveTool.hasSave()) {
-            saveData = saveTool.readRootSaveData();
-        } else {
-            saveData = this.genereateStarterRootSaveData();
-        }
-
-        this.applyGameSaveData(saveData);
-        frontend.log(this.getClass().getSimpleName(), load ? "load game done" : "new game done");
-    }
-    
     public void gameSaveCurrent() {
         frontend.log(this.getClass().getSimpleName(), "saveCurrent called");
-        saveTool.writeRootSaveData(this.currentSituationToSaveData());
-    }
-    
-    public boolean gameHasSave() {
-        return saveTool.hasSave();
+        saveTool.writeRootSaveData(this.currentSituationToRootSaveData());
     }
     
 }

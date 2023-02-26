@@ -92,7 +92,7 @@ extends BaseHundunScreen<T_GAME, T_SAVE> {
                 .row();
         
 
-        if (game.getSaveHandler().gameHasSave()) {
+        if (game.getSaveHandler().hasContinuedGameplaySave()) {
             uiRootTable.add(buttonContinueGame)
                 .height(BUTTON_BIG_HEIGHT)
                 .fillY()
@@ -101,7 +101,7 @@ extends BaseHundunScreen<T_GAME, T_SAVE> {
         }
 
         uiRootTable.add(buttonNewGame)
-            .height(game.getSaveHandler().gameHasSave() ? BUTTON_SMALL_HEIGHT : BUTTON_BIG_HEIGHT)
+            .height(game.getSaveHandler().hasContinuedGameplaySave() ? BUTTON_SMALL_HEIGHT : BUTTON_BIG_HEIGHT)
             .fillY()
             .padTop(10)
             .row();
