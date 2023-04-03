@@ -139,7 +139,8 @@ public class JavaFeatureForGwt {
         return map;
     }
     
-    public static <T> List<T> listOf(T[] items) {
+    @SafeVarargs
+    public static <T> List<T> listOf(T... items) {
         List<T> list = new ArrayList<>(items.length);
         for (int i = 0; i < items.length; i++) {
             list.add(items[i]);

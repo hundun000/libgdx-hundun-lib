@@ -86,9 +86,11 @@ public abstract class BaseHundunScreen<T_GAME extends BaseHundunGame<T_SAVE>, T_
         // ------ only backUi and UI use vfx ------
         backUiStage.getViewport().apply();
         backUiStage.draw();
+        
+        belowUiStageDraw(delta);
         uiStage.getViewport().apply();
         uiStage.draw();
-        gameObjectDraw(delta);
+        aboveUiStageDraw(delta);
         
         vfxManager.endInputCapture();
         vfxManager.applyEffects();
@@ -100,7 +102,11 @@ public abstract class BaseHundunScreen<T_GAME extends BaseHundunGame<T_SAVE>, T_
         renderPopupAnimations(delta, game.getBatch());
     }
     
-    protected void gameObjectDraw(float delta) {
+    protected void belowUiStageDraw(float delta) {
+        // base-class do nothing
+    }
+
+    protected void aboveUiStageDraw(float delta) {
         // base-class do nothing
     }
 

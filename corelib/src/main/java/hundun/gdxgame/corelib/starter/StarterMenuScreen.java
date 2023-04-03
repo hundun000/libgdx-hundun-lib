@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import hundun.gdxgame.corelib.base.BaseHundunGame;
@@ -36,7 +37,7 @@ extends BaseHundunScreen<T_GAME, T_SAVE> {
                 StarterMenuScreen<T_GAME, T_SAVE> target,
                 T_GAME game, 
                 String titleText,
-                AtlasRegion backTexture,
+                Drawable backTexture,
                 InputListener buttonContinueGameInputListener, 
                 InputListener buttonNewGameInputListener
                 ) {
@@ -66,7 +67,7 @@ extends BaseHundunScreen<T_GAME, T_SAVE> {
                 T_GAME game, 
                 Viewport sharedViewport,
                 String titleText,
-                AtlasRegion backTexture,
+                Drawable backTexture,
                 InputListener buttonContinueGameInputListener, 
                 InputListener buttonNewGameInputListener
                 ) {
