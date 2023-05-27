@@ -47,8 +47,10 @@ public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, 
         if (mainSkinFilePath != null) {
             this.mainSkin = new Skin(Gdx.files.internal(mainSkinFilePath));
         }
-        this.saveHandler.lazyInitOnGameCreate();
-    };
+        if (saveHandler != null) {
+            saveHandler.lazyInitOnGameCreate();
+        }
+    }
     /**
      * 只依赖Stage1的成员
      */
