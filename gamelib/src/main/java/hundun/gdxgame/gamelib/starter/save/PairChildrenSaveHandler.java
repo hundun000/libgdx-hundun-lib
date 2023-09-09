@@ -48,7 +48,7 @@ public abstract class PairChildrenSaveHandler<T_ROOT_SAVE, T_SYSTEM_SAVE, T_GAME
     public void systemSettingLoadOrStarter() {
         
         T_SYSTEM_SAVE systemSave;
-        if (saveTool.hasRootSave()) {
+        if (saveTool.hasRootSave() && fileRootSaveDataCache != null) {
             systemSave = rootSaveExtension.getSystemSave(fileRootSaveDataCache);
         } else {
             systemSave = rootSaveExtension.getSystemSave(starterRootSaveDataCache);
@@ -111,12 +111,12 @@ public abstract class PairChildrenSaveHandler<T_ROOT_SAVE, T_SYSTEM_SAVE, T_GAME
                 );
     }
 
-    public static interface ISubGameplaySaveHandler<T_GAMEPLAY_SAVE> {
+    public interface ISubGameplaySaveHandler<T_GAMEPLAY_SAVE> {
         void applyGameplaySaveData(T_GAMEPLAY_SAVE gameplaySave);
         void currentSituationToGameplaySaveData(T_GAMEPLAY_SAVE gameplaySave);
     }
     
-    public static interface ISubSystemSettingSaveHandler<T_SYSTEM_SAVE> {
+    public interface ISubSystemSettingSaveHandler<T_SYSTEM_SAVE> {
         void applySystemSetting(T_SYSTEM_SAVE systemSettingSave);
         void currentSituationToSystemSetting(T_SYSTEM_SAVE systemSettingSave);
     }
