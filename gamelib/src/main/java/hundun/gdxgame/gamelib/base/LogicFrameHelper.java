@@ -45,6 +45,6 @@ public class LogicFrameHelper {
     }
 
     public int secondToFrameNum(double second) {
-        return (int) (logicFramePerSecond * second * scale);
+        return (int) Math.round(logicFramePerSecond * second * scale);
     }
 }
