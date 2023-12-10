@@ -24,33 +24,36 @@ public abstract class BaseHundunScreen<T_GAME extends BaseHundunGame<T_SAVE>, T_
     protected final T_GAME game;
     
     protected final Viewport sharedViewport;
-    protected final Stage uiStage;
-    protected final Stage popupUiStage;
-    protected final Stage backUiStage;
-    protected final VfxManager vfxManager;
-    protected final Table uiRootTable;
-    protected final Table popupRootTable;
+    protected Stage uiStage;
+    protected Stage popupUiStage;
+    protected Stage backUiStage;
+    protected VfxManager vfxManager;
+    protected Table uiRootTable;
+    protected Table popupRootTable;
     
     // ------ lazy init ------
-    protected LogicFrameHelper logicFrameHelper;
     
     public BaseHundunScreen(T_GAME game, Viewport sharedViewport) {
         this.game = game;
         //OrthographicCamera camera = new OrthographicCamera();
         //this.sharedViewport = new FitViewport(game.getWidth(), game.getHeight(), camera);
         this.sharedViewport = sharedViewport;
+        baseInit();
+    }
+
+    protected void baseInit() {
         this.uiStage = new Stage(sharedViewport, game.getBatch());
         this.popupUiStage = new Stage(sharedViewport, game.getBatch());
         this.backUiStage = new Stage(sharedViewport, game.getBatch());
-        
+
         uiRootTable = new Table();
         uiRootTable.setFillParent(true);
         uiStage.addActor(uiRootTable);
-        
+
         popupRootTable = new Table();
         popupRootTable.setFillParent(true);
         popupUiStage.addActor(popupRootTable);
-        
+
         // VfxManager is a host for the effects.
         // It captures rendering into internal off-screen buffer and applies a chain of defined effects.
         // Off-screen buffers may have any pixel format, for this example we will use RGBA8888.
@@ -67,8 +70,8 @@ public abstract class BaseHundunScreen<T_GAME extends BaseHundunGame<T_SAVE>, T_
 //        Gdx.gl.glClearColor(1, 1, 1, 1);
 //        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if (logicFrameHelper != null) {
-            boolean isLogicFrame = logicFrameHelper.logicFrameCheck(delta);
+        if (game.logicFrameHelper != null) {
+            boolean isLogicFrame = game.logicFrameHelper.logicFrameCheck(delta);
             if (isLogicFrame) {
                 onLogicFrame();
             }

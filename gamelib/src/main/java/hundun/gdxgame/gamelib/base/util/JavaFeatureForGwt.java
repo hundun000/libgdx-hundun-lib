@@ -1,9 +1,7 @@
 package hundun.gdxgame.gamelib.base.util;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collector;
 
 /**
  * @author hundun
@@ -46,7 +44,7 @@ public class JavaFeatureForGwt {
             if (decimalPart.length() > decimalBit) {
                 decimalPart = decimalPart.substring(0, decimalBit);
             }
-            if (!decimalPart.equals("")) {
+            if (!decimalPart.isEmpty()) {
                 decimalPart = "." + decimalPart;
             }
             return integerPart + decimalPart;
@@ -72,7 +70,7 @@ public class JavaFeatureForGwt {
 
     
     public static String stringRepeat(String text, int time) {
-        final StringBuffer buffer= new StringBuffer();
+        final StringBuilder buffer= new StringBuilder();
         for (int i = 0; i < time; i++) {
             buffer.append(text);
         }
@@ -207,5 +205,16 @@ public class JavaFeatureForGwt {
         return value;
     }
 
-    
+    public static <T> Collector<T, ?, List<T>> lastN(int n) {
+        return Collector.<T, Deque<T>, List<T>>of(ArrayDeque::new, (acc, t) -> {
+            if(acc.size() == n)
+                acc.pollFirst();
+            acc.add(t);
+        }, (acc1, acc2) -> {
+            while(acc2.size() < n && !acc1.isEmpty()) {
+                acc2.addFirst(acc1.pollLast());
+            }
+            return acc2;
+        }, ArrayList::new);
+    }
 }

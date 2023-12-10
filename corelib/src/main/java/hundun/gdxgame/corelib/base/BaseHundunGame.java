@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import de.eskalon.commons.core.ManagedGame;
 import de.eskalon.commons.screen.ManagedScreen;
 import de.eskalon.commons.screen.transition.ScreenTransition;
+import hundun.gdxgame.gamelib.base.LogicFrameHelper;
 import hundun.gdxgame.gamelib.base.save.AbstractSaveHandler;
 import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
 import lombok.Getter;
@@ -16,7 +17,8 @@ public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, 
     public boolean debugMode;
     protected final int constMainViewportWidth;
     protected final int constMainViewportHeight;
-
+    @Getter
+    protected LogicFrameHelper logicFrameHelper;
     @Getter
     protected SpriteBatch batch;
 
@@ -33,10 +35,11 @@ public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, 
     protected String mainSkinFilePath;
     
     
-    public BaseHundunGame(int viewportWidth, int viewportHeight) {
+    public BaseHundunGame(int viewportWidth, int viewportHeight, int LOGIC_FRAME_PER_SECOND) {
         this.constMainViewportWidth = viewportWidth;
         this.constMainViewportHeight = viewportHeight;
         this.frontend = new LibgdxFrontend();
+        this.logicFrameHelper = new LogicFrameHelper(LOGIC_FRAME_PER_SECOND);
     }
     
     /**

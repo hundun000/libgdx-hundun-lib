@@ -8,9 +8,10 @@ import lombok.Setter;
  * Created on 2022/08/31
  */
 public class LogicFrameHelper {
-    
-    private final int LOGIC_FRAME_PER_SECOND;
-    private final float LOGIC_FRAME_LENGTH;
+    @Getter
+    private final int logicFramePerSecond;
+    @Getter
+    private final float logicFrameLength;
     @Getter
     private int clockCount = 0;
     private float logicFramAccumulator;
@@ -19,15 +20,15 @@ public class LogicFrameHelper {
     @Setter
     private boolean logicFramePause;
     
-    public LogicFrameHelper(int LOGIC_FRAME_PER_SECOND) {
-        this.LOGIC_FRAME_PER_SECOND = LOGIC_FRAME_PER_SECOND;
-        this.LOGIC_FRAME_LENGTH = 1f / LOGIC_FRAME_PER_SECOND;
+    public LogicFrameHelper(int logicFramePerSecond) {
+        this.logicFramePerSecond = logicFramePerSecond;
+        this.logicFrameLength = 1f / logicFramePerSecond;
     }
     
     public boolean logicFrameCheck(float delta) {
         logicFramAccumulator += delta;
-        if (logicFramAccumulator >= LOGIC_FRAME_LENGTH) {
-            logicFramAccumulator -= LOGIC_FRAME_LENGTH;
+        if (logicFramAccumulator >= logicFrameLength) {
+            logicFramAccumulator -= logicFrameLength;
             if (!logicFramePause) {
                 clockCount++;
                 return true;
@@ -37,10 +38,10 @@ public class LogicFrameHelper {
     }
     
     public double frameNumToSecond(int frameNum) {
-        return frameNum * LOGIC_FRAME_LENGTH;
+        return frameNum * logicFrameLength;
     }
 
     public int secondToFrameNum(double second) {
-        return (int) (LOGIC_FRAME_PER_SECOND * second);
+        return (int) (logicFramePerSecond * second);
     }
 }
