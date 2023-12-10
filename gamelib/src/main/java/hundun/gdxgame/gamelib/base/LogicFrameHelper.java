@@ -14,21 +14,24 @@ public class LogicFrameHelper {
     private final float logicFrameLength;
     @Getter
     private int clockCount = 0;
-    private float logicFramAccumulator;
+    private float logicFrameAccumulator;
 
     @Getter
     @Setter
     private boolean logicFramePause;
-    
+    @Getter
+    @Setter
+    private float scale;
     public LogicFrameHelper(int logicFramePerSecond) {
         this.logicFramePerSecond = logicFramePerSecond;
         this.logicFrameLength = 1f / logicFramePerSecond;
+        this.scale = 1.0f;
     }
     
     public boolean logicFrameCheck(float delta) {
-        logicFramAccumulator += delta;
-        if (logicFramAccumulator >= logicFrameLength) {
-            logicFramAccumulator -= logicFrameLength;
+        logicFrameAccumulator += delta;
+        if (logicFrameAccumulator >= logicFrameLength) {
+            logicFrameAccumulator -= logicFrameLength;
             if (!logicFramePause) {
                 clockCount++;
                 return true;
@@ -38,10 +41,10 @@ public class LogicFrameHelper {
     }
     
     public double frameNumToSecond(int frameNum) {
-        return frameNum * logicFrameLength;
+        return frameNum * logicFrameLength / scale;
     }
 
     public int secondToFrameNum(double second) {
-        return (int) (logicFramePerSecond * second);
+        return (int) (logicFramePerSecond * second * scale);
     }
 }
