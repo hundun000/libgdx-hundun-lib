@@ -15,7 +15,7 @@ public abstract class AbstractSaveHandler<T_SAVE> {
     public abstract void gameplayLoadOrStarter(boolean load);
     //protected abstract void applyRootSaveData(T_SAVE saveData);
     protected abstract T_SAVE currentSituationToRootSaveData();
-    protected abstract T_SAVE genereateStarterRootSaveData();
+    protected abstract T_SAVE generateStarterRootSaveData();
     public abstract boolean hasContinuedGameplaySave();
     public abstract void registerSubHandler(Object object);
     
@@ -29,9 +29,11 @@ public abstract class AbstractSaveHandler<T_SAVE> {
         this.saveTool.lazyInitOnGameCreate();
     }
     
-    public void gameSaveCurrent() {
+    public T_SAVE gameSaveCurrent() {
         frontend.log(this.getClass().getSimpleName(), "saveCurrent called");
-        saveTool.writeRootSaveData(this.currentSituationToRootSaveData());
+        T_SAVE saveData = this.currentSituationToRootSaveData();
+        saveTool.writeRootSaveData(saveData);
+        return saveData;
     }
     
 }

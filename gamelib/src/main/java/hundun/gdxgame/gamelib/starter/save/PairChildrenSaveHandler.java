@@ -40,7 +40,7 @@ public abstract class PairChildrenSaveHandler<T_ROOT_SAVE, T_SYSTEM_SAVE, T_GAME
         } else {
             fileRootSaveDataCache = null;
         }
-        this.starterRootSaveDataCache = this.genereateStarterRootSaveData();
+        this.starterRootSaveDataCache = this.generateStarterRootSaveData();
         this.hasContinuedGameplaySave = fileRootSaveDataCache != null && rootSaveExtension.getGameplaySave(fileRootSaveDataCache) != null;
     }
     
