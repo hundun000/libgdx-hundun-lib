@@ -9,7 +9,7 @@ import de.eskalon.commons.screen.ManagedScreen;
 import de.eskalon.commons.screen.transition.ScreenTransition;
 import hundun.gdxgame.gamelib.base.LogicFrameHelper;
 import hundun.gdxgame.gamelib.base.save.AbstractSaveHandler;
-import hundun.gdxgame.gamelib.base.util.JavaFeatureForGwt;
+import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import lombok.Getter;
 
 
@@ -93,4 +93,12 @@ public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, 
         return constMainViewportHeight;
     }
 
+    public void clockDelta(float delta, ILogicFrameListener source) {
+        boolean isLogicFrame = this.logicFrameHelper.logicFrameCheck(delta);
+        if (isLogicFrame) {
+            this.onLogicFrame(source);
+        }
+    }
+
+    protected abstract void onLogicFrame(ILogicFrameListener source);
 }
