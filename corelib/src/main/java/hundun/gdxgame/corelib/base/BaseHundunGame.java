@@ -15,8 +15,10 @@ import lombok.Getter;
 
 public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, ScreenTransition> {
     public boolean debugMode;
-    protected final int constMainViewportWidth;
-    protected final int constMainViewportHeight;
+    @Getter
+    protected final int mainViewportWidth;
+    @Getter
+    protected final int mainViewportHeight;
     @Getter
     protected LogicFrameHelper logicFrameHelper;
     @Getter
@@ -36,8 +38,8 @@ public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, 
     
     
     public BaseHundunGame(int viewportWidth, int viewportHeight, int LOGIC_FRAME_PER_SECOND) {
-        this.constMainViewportWidth = viewportWidth;
-        this.constMainViewportHeight = viewportHeight;
+        this.mainViewportWidth = viewportWidth;
+        this.mainViewportHeight = viewportHeight;
         this.frontend = new LibgdxFrontend();
         this.logicFrameHelper = new LogicFrameHelper(LOGIC_FRAME_PER_SECOND);
     }
@@ -82,16 +84,6 @@ public abstract class BaseHundunGame<T_SAVE> extends ManagedGame<ManagedScreen, 
 		batch.dispose();
 	}
 
-
-    @Override
-    public int getWidth() {
-        return constMainViewportWidth;
-    }
-    
-    @Override
-    public int getHeight() {
-        return constMainViewportHeight;
-    }
 
     public void clockDelta(float delta, ILogicFrameListener source) {
         boolean isLogicFrame = this.logicFrameHelper.logicFrameCheck(delta);

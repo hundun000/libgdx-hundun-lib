@@ -44,9 +44,9 @@ public abstract class BaseHundunScreen<T_GAME extends BaseHundunGame<T_SAVE>, T_
     }
 
     protected void baseInit() {
-        this.uiStage = new Stage(sharedViewport != null ? sharedViewport : new FitViewport(game.getWidth(), game.getHeight()), game.getBatch());
-        this.popupUiStage = new Stage(sharedViewport != null ? sharedViewport : new FitViewport(game.getWidth(), game.getHeight()), game.getBatch());
-        this.backUiStage = new Stage(sharedViewport != null ? sharedViewport : new FitViewport(game.getWidth(), game.getHeight()), game.getBatch());
+        this.uiStage = new Stage(sharedViewport != null ? sharedViewport : new FitViewport(game.getMainViewportWidth(), game.getMainViewportHeight()), game.getBatch());
+        this.popupUiStage = new Stage(sharedViewport != null ? sharedViewport : new FitViewport(game.getMainViewportWidth(), game.getMainViewportHeight()), game.getBatch());
+        this.backUiStage = new Stage(sharedViewport != null ? sharedViewport : new FitViewport(game.getMainViewportWidth(), game.getMainViewportHeight()), game.getBatch());
 
         uiRootTable = new Table();
         uiRootTable.setFillParent(true);

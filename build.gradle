@@ -61,7 +61,7 @@ project(":corelib") {
         api "com.crashinvaders.vfx:gdx-vfx-core:$vfxVersion"
         api "com.crashinvaders.vfx:gdx-vfx-effects:$vfxVersion"
 
-        compileOnly 'org.jetbrains:annotations:26.0.2'
+        api 'org.jetbrains:annotations:26.0.2'
         compileOnly 'org.projectlombok:lombok:1.18.4'
         annotationProcessor 'org.projectlombok:lombok:1.18.4'
     }
