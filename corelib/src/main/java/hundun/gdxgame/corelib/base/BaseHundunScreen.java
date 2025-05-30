@@ -68,7 +68,11 @@ public abstract class BaseHundunScreen<T_GAME extends BaseHundunGame<T_SAVE>, T_
 //        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.clockDelta(delta, this);
-        
+
+        backUiStage.getViewport().apply();
+        uiStage.getViewport().apply();
+        popupUiStage.getViewport().apply();
+
         backUiStage.act();
         uiStage.act();
         popupUiStage.act();
@@ -79,11 +83,9 @@ public abstract class BaseHundunScreen<T_GAME extends BaseHundunGame<T_SAVE>, T_
         vfxManager.beginInputCapture();
         
         // ------ only backUi and UI use vfx ------
-        backUiStage.getViewport().apply();
         backUiStage.draw();
         
         belowUiStageDraw(delta);
-        uiStage.getViewport().apply();
         uiStage.draw();
         aboveUiStageDraw(delta);
         
@@ -92,7 +94,6 @@ public abstract class BaseHundunScreen<T_GAME extends BaseHundunGame<T_SAVE>, T_
         vfxManager.renderToScreen();
         
         // ------ popupUi out of vfx ------
-        popupUiStage.getViewport().apply();
         popupUiStage.draw();
         renderPopupAnimations(delta, game.getBatch());
     }
