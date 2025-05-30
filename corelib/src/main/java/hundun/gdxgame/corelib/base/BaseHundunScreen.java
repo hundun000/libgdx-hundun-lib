@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.crashinvaders.vfx.VfxManager;
 
@@ -11,7 +12,7 @@ import de.eskalon.commons.screen.ManagedScreen;
 import hundun.gdxgame.gamelib.base.LogicFrameHelper;
 import hundun.gdxgame.gamelib.starter.listerner.ILogicFrameListener;
 import lombok.Getter;
-
+import org.jetbrains.annotations.Nullable;
 
 
 /**
@@ -23,7 +24,7 @@ import lombok.Getter;
 public abstract class BaseHundunScreen<T_GAME extends BaseHundunGame<T_SAVE>, T_SAVE> extends ManagedScreen implements ILogicFrameListener {
     @Getter
     protected final T_GAME game;
-    
+    @Nullable
     protected final Viewport sharedViewport;
     protected Stage uiStage;
     protected Stage popupUiStage;
@@ -34,7 +35,7 @@ public abstract class BaseHundunScreen<T_GAME extends BaseHundunGame<T_SAVE>, T_
     
     // ------ lazy init ------
     
-    public BaseHundunScreen(T_GAME game, Viewport sharedViewport) {
+    public BaseHundunScreen(T_GAME game, @Nullable Viewport sharedViewport) {
         this.game = game;
         //OrthographicCamera camera = new OrthographicCamera();
         //this.sharedViewport = new FitViewport(game.getWidth(), game.getHeight(), camera);
@@ -43,9 +44,9 @@ public abstract class BaseHundunScreen<T_GAME extends BaseHundunGame<T_SAVE>, T_
     }
 
     protected void baseInit() {
-        this.uiStage = new Stage(sharedViewport, game.getBatch());
-        this.popupUiStage = new Stage(sharedViewport, game.getBatch());
-        this.backUiStage = new Stage(sharedViewport, game.getBatch());
+        this.uiStage = new Stage(sharedViewport != null ? sharedViewport : new FitViewport(game.getWidth(), game.getHeight()), game.getBatch());
+        this.popupUiStage = new Stage(sharedViewport != null ? sharedViewport : new FitViewport(game.getWidth(), game.getHeight()), game.getBatch());
+        this.backUiStage = new Stage(sharedViewport != null ? sharedViewport : new FitViewport(game.getWidth(), game.getHeight()), game.getBatch());
 
         uiRootTable = new Table();
         uiRootTable.setFillParent(true);
@@ -63,7 +64,6 @@ public abstract class BaseHundunScreen<T_GAME extends BaseHundunGame<T_SAVE>, T_
 
     @Override
     public void render(float delta) {
-        sharedViewport.apply();
 //        Gdx.gl.glClearColor(1, 1, 1, 1);
 //        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
